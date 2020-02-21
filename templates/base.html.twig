@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}SITE D'ANNONCES ANNONCEO{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        {% block css %}{{ encore_entry_link_tags('app') }}{% endblock %}
+        {% block js %}{{ encore_entry_script_tags('app') }}{% endblock %}
+    </head>
+    <div>
+
+    <header>
+        {% block header %}
+            <nav class="navbar has-background-grey-darker is-dark">
+                <div class="navbar-brand">
+                    <a class="navbar-item " href="#">
+                        <p class="level-item has-text-centered">
+                        <a class="subtitle is-4 has-text-primary " href="{{ path("index") }}">
+                            <i class="fab fa-app-store-ios"></i><b>NNONCEO</b>
+
+                    </a>
+                        </p>
+                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div id="navbarBasicExample" class="navbar-menu">
+                                    <div class="navbar-start">
+                    {#                    <a class="navbar-item" href="#">#}
+                    {#                        Liste artistes#}
+                    {#                    </a>#}
+                                        {% if is_granted("ROLE_ADMIN") %}
+                                            <a class="navbar-item" href="{{ path("categorie_add") }}">
+                                                Ajouter categorie
+                                            </a>
+                                        {% endif %}
+                    {#                    <a class="navbar-item" href="#">#}
+                    {#                        Ranking news#}
+                    {#                    </a>#}
+                    {#                    <a class="navbar-item" href="#">#}
+                    {#                        Disques#}
+                    {#                    </a>#}
+                    {#                    <a class="navbar-item" href="#">#}
+                    {#                        Label page#}
+                    {#                    </a>#}
+                                    </div>
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                                    <a class="button is-light is-small" href="{{ " " }}">
+                                        {{ app.user.prenom ~ " " ~ app.user.nom }}
+                                    </a>
+
+                                    <a class="button is-light is-small" href="{{ path("app_logout") }}">
+                                        Déconnexion
+                                    </a>
+                                {% else %}
+                                    <a class="button is-primary is-small" href="#">
+                                        <strong>Inscription</strong>
+                                    </a>
+                                    <a class="button is-light is-small" href="{{ path("app_login") }}">
+                                        Connexion
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {#                    <a class="navbar-item">#}
+                        {#                        <form action="#">#}
+                        {#                            <div class="field has-addons">#}
+                        {#                                <div class="control is-expanded">#}
+                        {#                                    <input name="query" type="text" class="input is-small" placeholder="Recherche ..." required>#}
+                        {#                                </div>#}
+                        {#                                <div class="control">#}
+                        {#                                    <button type="submit" class="button is-primary is-small">#}
+                        {#                                        <i class="fas fa-search"></i>#}
+                        {#                                    </button>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+                        {#                        </form>#}
+                        {#                    </a>#}
+                    </div>
+                </div>
+            </nav>
+        {% endblock %}
+    </header>
+
+        {% block body %}
+
+{#            {% for message in app.flashes('success') %}#}
+{#                <div id = "message" class="notification is-primary">#}
+{#                    <button class="delete"></button>#}
+{#                    {{ message }}#}
+{#                </div>#}
+
+{#            {% endfor %}#}
+
+            <div class="columns is-vcentered is-mobile is-centered">
+            <div class="column has-text-centered is-two-fifths">
+            <div class="dropdown">
+                <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-ui-actions">
+                        <span>CATEGORIES</span>
+                        <span class="icon is-small">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-ui-actions" role="menu">
+                    <div class="dropdown-content">
+                        {% for cat in categories %}
+                            <a href="#" class="dropdown-item">
+
+                                <option value='{{ cat.id }}'>  {{ cat.titre }} </option>
+
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="dropdown">
+                <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-ui-actions">
+                        <span>REGIONS</span>
+                        <span class="icon is-small">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-ui-actions" role="menu">
+                    <div class="dropdown-content">
+                        {% for region in regions %}
+                            <a href="#" class="dropdown-item">
+
+                                <option value='{{ region.ville }}'>  {{ region.ville }} </option>
+
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="dropdown">
+                <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-ui-actions">
+                        <span>MEMBRES</span>
+                        <span class="icon is-small">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-ui-actions" role="menu">
+                    <div class="dropdown-content">
+                        {% for m in membres %}
+                            <a href="#" class="dropdown-item">
+
+                                <option value='{{ m.id }}'>  {{ m.pseudo }} </option>
+
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+                <br>
+                <br>
+                <br>
+
+                PRIX <input class="slider is-fullwidth" step="1" min="0" max="100" value="50" type="range">
+
+                <br>
+                <br>
+                <br>
+
+                <button class="button is-primary is-light">FILTRER</button>
+
+                </div>
+
+
+{#            <div class="row">#}
+{#                <aside class="col-4">#}
+{#                    <form method="POST">#}
+
+
+{#                        <div>#}
+{#                            <label>Catégorie</label>#}
+{#                            <select name="categorie">#}
+{#                                <option value="">Toutes les catégories</option>#}
+{#                                {% for cat in categories %}#}
+{#                                        <option value='{{ cat.id }}'>  {{ cat.titre }} </option>#}
+{#                                {% endfor %}#}
+{#                            </select>#}
+{#                        </div>#}
+
+{#                        <div>#}
+{#                            <label>Régions</label>#}
+{#                            <select name="region">#}
+{#                                <option value="">Toutes les régions</option>#}
+{#                                {% for region in regions %}#}
+{#                                        <option value='{{ region.ville }}'>  {{ region.ville }} </option>#}
+{#                                {% endfor %}#}
+{#                            </select>#}
+{#                        </div>#}
+{#                        #}
+{#                        <div>#}
+{#                            <label>Membres</label>#}
+{#                            <select name="membre">#}
+{#                                <option value="">Tous les membres</option>#}
+{#                                {% for m in membres %}#}
+{#                                        <option value='{{ m.id }}'>  {{ m.pseudo }} </option>#}
+{#                                {% endfor %}                                #}
+{#                            </select>#}
+{#                        </div>#}
+
+{#                        <div>#}
+{#                            <label>Prix</label>#}
+{#                            <input type=range name="prix" min=0 max=10000>#}
+{#                        </div>#}
+{#                        #}
+{#                        <button>Filtrer</button>#}
+{#                    </form>#}
+{#                </aside>#}
+
+            <div class="column is-vcentered is-mobile is-centered">
+                <div class="has-text-centered column is-8">
+                    {% for ann in annonces %}
+                        <p>{{ ann.titre }}</p>
+                    {% endfor %}                                
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        {% endblock %}
+        {% block javascripts %}
+
+
+
+        {% endblock %}
+    </body>
+</html>

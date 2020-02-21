@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+<h1>Ajouter une categorie</h1>
+
+    {% for message in app.flashes('success') %}
+        <div id = "message" class="notification is-primary">
+            <button class="delete"></button>
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+<section class="section has-background-white-ter">
+    <h2 class = "subtitle">AJOUTER</h2>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.titre) }}
+    {{ form_row(form.motscles) }}
+    {{ form_row(form.ajouter,{"attr": {"class" : "button is-primary is-fullwidth"}})}}
+{#    <button class = "button is-primary is-fullwidth" type = "submit">AJOUTER</button>#}
+
+    {{ form_end(form) }}
+
+</section>
+{% endblock %}
